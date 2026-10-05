@@ -43,3 +43,13 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Local debug / diagnostics (do not commit)
+debug_keys.txt
+analyze_out.txt
+analyze_output.txt
+android/keytool_out.txt
+android/report.txt
+android/report_utf8.txt
+*.bak
+.env

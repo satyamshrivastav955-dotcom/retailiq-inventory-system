@@ -49,9 +49,16 @@ After creating your auth account, add a user document in Firestore:
 ## 4. Run the App
 
 ```bash
-cd c:\Users\satya\StudioProjects\k11_project
 flutter pub get
 flutter run
+```
+
+Run from the repository root (where `pubspec.yaml` lives).
+
+To run unit tests (no Firebase needed):
+
+```bash
+flutter test
 ```
 
 ## 5. Firestore Security Rules (Production)
