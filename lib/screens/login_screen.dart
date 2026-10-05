@@ -112,8 +112,17 @@ class _LoginScreenState extends State<LoginScreen>
           ElevatedButton(
             onPressed: () async {
               final email = resetEmailController.text.trim();
-              if (email.isNotEmpty) {
-                Navigator.pop(ctx);
+              final validationError = validateEmail(email);
+              if (validationError != null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(validationError),
+                    backgroundColor: AppColors.error,
+                  ),
+                );
+                return;
+              }
+              Navigator.pop(ctx);
                 final authProvider =
                     Provider.of<AuthProvider>(context, listen: false);
                 final success = await authProvider.sendPasswordReset(email);
@@ -128,7 +137,6 @@ class _LoginScreenState extends State<LoginScreen>
                     ),
                   );
                 }
-              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,

@@ -18,6 +18,20 @@ class ProductModel {
   final DateTime createdAt;
   final DateTime? lastSoldAt;
 
+  static double _parseDouble(dynamic value, [double fallback = 0]) {
+    if (value == null) return fallback;
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? fallback;
+    return fallback;
+  }
+
+  static int _parseInt(dynamic value, [int fallback = 0]) {
+    if (value == null) return fallback;
+    if (value is num) return value.toInt();
+    if (value is String) return int.tryParse(value) ?? fallback;
+    return fallback;
+  }
+
   ProductModel({
     required this.productId,
     required this.barcode,
@@ -72,12 +86,12 @@ class ProductModel {
       description: map['description'] ?? '',
       imageUrl: map['image_url'],
       category: map['category'] ?? 'Other',
-      costPrice: (map['cost_price'] ?? 0).toDouble(),
-      sellingPrice: (map['selling_price'] ?? 0).toDouble(),
-      quantity: (map['quantity'] ?? 0).toInt(),
+      costPrice: _parseDouble(map['cost_price']),
+      sellingPrice: _parseDouble(map['selling_price']),
+      quantity: _parseInt(map['quantity']),
       expiryDate: (map['expiry_date'] as Timestamp?)?.toDate(),
       supplier: map['supplier'] ?? '',
-      minimumStockLevel: (map['minimum_stock_level'] ?? 5).toInt(),
+      minimumStockLevel: _parseInt(map['minimum_stock_level'], 5),
       createdAt: (map['created_at'] as Timestamp?)?.toDate() ?? DateTime.now(),
       lastSoldAt: (map['last_sold_at'] as Timestamp?)?.toDate(),
     );
@@ -113,14 +127,14 @@ class ProductModel {
       description: map['description'] ?? '',
       imageUrl: map['image_url'],
       category: map['category'] ?? 'Other',
-      costPrice: (map['cost_price'] ?? 0).toDouble(),
-      sellingPrice: (map['selling_price'] ?? 0).toDouble(),
-      quantity: (map['quantity'] ?? 0).toInt(),
+      costPrice: _parseDouble(map['cost_price']),
+      sellingPrice: _parseDouble(map['selling_price']),
+      quantity: _parseInt(map['quantity']),
       expiryDate: map['expiry_date'] != null
           ? DateTime.parse(map['expiry_date'])
           : null,
       supplier: map['supplier'] ?? '',
-      minimumStockLevel: (map['minimum_stock_level'] ?? 5).toInt(),
+      minimumStockLevel: _parseInt(map['minimum_stock_level'], 5),
       createdAt: map['created_at'] != null
           ? DateTime.parse(map['created_at'])
           : DateTime.now(),

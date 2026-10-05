@@ -6,6 +6,20 @@ class SaleItem {
   final int quantity;
   final double price;
 
+  static double _parseDouble(dynamic value, [double fallback = 0]) {
+    if (value == null) return fallback;
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? fallback;
+    return fallback;
+  }
+
+  static int _parseInt(dynamic value, [int fallback = 0]) {
+    if (value == null) return fallback;
+    if (value is num) return value.toInt();
+    if (value is String) return int.tryParse(value) ?? fallback;
+    return fallback;
+  }
+
   SaleItem({
     required this.productId,
     required this.productName,
@@ -19,8 +33,8 @@ class SaleItem {
     return SaleItem(
       productId: map['product_id'] ?? '',
       productName: map['product_name'] ?? '',
-      quantity: (map['quantity'] ?? 0).toInt(),
-      price: (map['price'] ?? 0).toDouble(),
+      quantity: _parseInt(map['quantity']),
+      price: _parseDouble(map['price']),
     );
   }
 
@@ -65,7 +79,7 @@ class SaleModel {
               ?.map((item) => SaleItem.fromMap(item as Map<String, dynamic>))
               .toList() ??
           [],
-      totalAmount: (map['total_amount'] ?? 0).toDouble(),
+      totalAmount: SaleItem._parseDouble(map['total_amount']),
       paymentMethod: map['payment_method'] ?? 'Cash',
       timestamp: (map['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
@@ -96,7 +110,7 @@ class SaleModel {
       staffId: map['staff_id'] ?? '',
       staffName: map['staff_name'] ?? '',
       items: itemsList,
-      totalAmount: (map['total_amount'] ?? 0).toDouble(),
+      totalAmount: SaleItem._parseDouble(map['total_amount']),
       paymentMethod: map['payment_method'] ?? 'Cash',
       timestamp: map['timestamp'] != null
           ? DateTime.parse(map['timestamp'])

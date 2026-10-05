@@ -95,6 +95,17 @@ String? validatePositiveNumber(String? value, String fieldName) {
   return null;
 }
 
+String? validateNonNegativeInt(String? value, String fieldName) {
+  if (value == null || value.isEmpty) {
+    return '$fieldName is required';
+  }
+  final number = int.tryParse(value);
+  if (number == null || number < 0) {
+    return 'Enter a valid whole number for $fieldName';
+  }
+  return null;
+}
+
 // ─── Misc ──────────────────────────────────────────────────
 String getGreeting() {
   final hour = DateTime.now().hour;

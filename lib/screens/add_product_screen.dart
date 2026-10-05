@@ -423,7 +423,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         icon: Icons.inventory_2_outlined,
                       ),
                       validator: (v) =>
-                          validatePositiveNumber(v, 'Quantity'),
+                          validateNonNegativeInt(v, 'Quantity'),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -436,7 +436,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         icon: Icons.low_priority,
                       ),
                       validator: (v) =>
-                          validatePositiveNumber(v, 'Min stock level'),
+                          validateNonNegativeInt(v, 'Min stock level'),
                     ),
                   ),
                 ],
